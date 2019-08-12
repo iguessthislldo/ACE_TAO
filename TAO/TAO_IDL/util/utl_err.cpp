@@ -86,6 +86,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/ANSI_Escape.h"
 
 // Convert an error code into a const char *
 static const char *
@@ -280,10 +281,14 @@ idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_error = c;
   ACE_ERROR ((LM_ERROR,
-              "Error - %C: \"%C\", line %d: %C",
+              "%CError%C - %C: %C\"%C\", line %d%C: %C",
+              idl_global->color_ ? ACE_ANSI_SGR(ACE_ANSI_FG_RED): "",
+              idl_global->color_ ? ACE_ANSI_SGR(ACE_ANSI_RESET_SGR) : "",
               idl_global->prog_name (),
+              idl_global->color_ ? ACE_ANSI_SGR(ACE_ANSI_BOLD): "",
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
+              idl_global->color_ ? ACE_ANSI_SGR(ACE_ANSI_END_BOLD) : "",
               error_string (c)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }

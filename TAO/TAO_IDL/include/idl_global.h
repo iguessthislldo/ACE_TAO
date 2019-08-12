@@ -889,6 +889,11 @@ public:
    */
   ACE_Unbounded_Set<Identifier> unknown_annotations_seen_;
 
+  /**
+   * Print Color Output using ANSI Escape Code
+   */
+  bool color_;
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack

@@ -82,6 +82,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/ANSI_Escape.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -328,6 +329,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           throw Bailout ();
         }
+
+      idl_global->color_ = ace_file_supports_ansi_escape (stderr);
 
       // Give BE chance to set default IDL version using BE_init
       idl_global->idl_version_ = idl_global->default_idl_version_;
