@@ -18,7 +18,7 @@
  */
 
 void
-annotation_tests()
+annotation_tests ()
 {
   /* -------------------------------------------------------------------------
    * Annotations Declarations
@@ -154,21 +154,18 @@ annotation_tests()
       "};\n"
     ).assert_annotation_decl ("@enum_annotation");
     t.assert_annotation_member_count (enum_annotation, 1);
-    t.set_scope(enum_annotation);
+    t.set_scope (enum_annotation);
     AST_Annotation_Member *value =
       t.get_annotation_member (enum_annotation, "value");
 
-    AST_EnumVal *a = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("A"));
-    enum_annotation_a = a->constant_value();
+    AST_EnumVal *a = t.assert_node<AST_EnumVal> ("A");
+    enum_annotation_a = a->constant_value ();
 
-    AST_EnumVal *b = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("B"));
-    enum_annotation_b = b->constant_value();
+    AST_EnumVal *b = t.assert_node<AST_EnumVal> ("B");
+    enum_annotation_b = b->constant_value ();
 
-    AST_EnumVal *c = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("C"));
-    enum_annotation_c = c->constant_value();
+    AST_EnumVal *c = t.assert_node<AST_EnumVal> ("C");
+    enum_annotation_c = c->constant_value ();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
   } catch (Failed const &) {}
@@ -185,7 +182,7 @@ annotation_tests()
     AST_Annotation_Member *value =
       t.get_annotation_member (string_annotation, "value");
 
-    UTL_String test_string("This is some text");
+    UTL_String test_string ("This is some text");
     t.assert_annotation_member_value<UTL_String*, UTL_String*>
       (value, &test_string);
   } catch (Failed const &) {}
@@ -210,8 +207,8 @@ annotation_tests()
     AST_Constant *x = dynamic_cast<AST_Constant *> (t.assert_node ("X"));
     constant_annotation_x = x->constant_value();
 
-    AST_Constant *y = dynamic_cast<AST_Constant *> (t.assert_node ("Y"));
-    constant_annotation_y = y->constant_value();
+    constant_annotation_x = t.assert_node<AST_Constant> ("X")->constant_value ();
+    constant_annotation_y = t.assert_node<AST_Constant> ("Y")->constant_value ();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
   } catch (Failed const &) {}
@@ -323,7 +320,7 @@ annotation_tests()
         t.failed (
           "Could Not Convert test_seq_t from AST_Decl into AST_Typedef");
       }
-    AST_Decl *seq_decl = dynamic_cast<AST_Decl *>(typedef_node->base_type ());
+    AST_Decl *seq_decl = dynamic_cast<AST_Decl *> (typedef_node->base_type ());
     AST_Sequence *seq = AST_Sequence::narrow_from_decl (seq_decl);
     if (!seq)
       {
@@ -602,19 +599,19 @@ annotation_tests()
     AST_Annotation_Member *member;
     AST_Annotation_Appl *annotation;
 
-    UTL_String first_string("This is some text");
+    UTL_String first_string ("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &first_string);
 
-    UTL_String second_string("Something else");
+    UTL_String second_string ("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &second_string);
 
-    UTL_String third_string("One last thing");
+    UTL_String third_string ("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
@@ -766,7 +763,7 @@ annotation_tests()
       "};\n"
     );
 
-    AST_Interface *interface1 = dynamic_cast<AST_Interface *> (t.assert_node ("interface1"));
+    AST_Interface *interface1 = t.assert_node<AST_Interface> ("interface1");
     t.assert_annotation_appl_count (interface1, 1);
     t.assert_annotation_appl (interface1, 0, test_annotation_1);
 
@@ -856,7 +853,7 @@ annotation_tests()
       {
         t.failed ("Could Not Get member");
       }
-    if (member->visibility() != AST_Field::vis_NA)
+    if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
         ACE_OS::snprintf (&buffer[0], 100,
