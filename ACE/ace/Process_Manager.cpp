@@ -44,7 +44,7 @@ ACE_Process_Manager::cleanup (void *, void *)
 // a sleep.  See wait() for more info.
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
 static void
-sigchld_nop (int, siginfo_t *, ucontext_t *)
+ace_process_manager_sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
   return;
 }
@@ -886,7 +886,7 @@ ACE_Process_Manager::wait (pid_t pid,
           ACE_Sig_Action old_action;
           if (this->reactor () == 0)
             {
-              ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+              ACE_Sig_Handler_Ex sigchld_nop_ptr = ace_process_manager_sigchld_nop;
               ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
               do_sigchld.register_action (SIGCHLD, &old_action);
             }

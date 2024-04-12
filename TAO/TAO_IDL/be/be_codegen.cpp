@@ -824,20 +824,19 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
+  *this->anyop_header_ << "\n#include \"";
   if (be_global->safe_include ())
     {
       // Generate the safe include if it is defined instead of the client header
       // need to put only the base names. Path info is not required.
-      *this->anyop_header_ << "\n#include \""
-                           << be_global->safe_include ()
-                           << "\"";
+      *this->anyop_header_ << be_global->safe_include ();
     }
   else
     {
-      *this->anyop_header_ << "\n#include \"" << tao_prefix.c_str ()
-                           << be_global->be_get_client_hdr_fname ()
-                           << "\"";
+      *this->anyop_header_ << tao_prefix.c_str ()
+                           << be_global->be_get_client_hdr_fname (true);
     }
+  *this->anyop_header_ << "\"";
 
   // If we have not suppressed Any operator generation and also
   // are not generating the operators in a separate file, we

@@ -8,7 +8,7 @@
 #include "tao/IOPC.h"
 #include "ace/OS_NS_strings.h"
 
-static const char the_prefix[] = "iiop";
+static const char iiop_factory_the_prefix[] = "iiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,13 +25,13 @@ int
 TAO_IIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::iiop_factory_the_prefix) == 0);
 }
 
 const char *
 TAO_IIOP_Protocol_Factory::prefix () const
 {
-  return ::the_prefix;
+  return ::iiop_factory_the_prefix;
 }
 
 char

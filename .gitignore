@@ -38,9 +38,7 @@ ipch/
 /ACE/include/makeinclude/platform_macros.GNU
 /setenv.cmd
 /setenv.sh
-/build
-/ACE/build
-/TAO/build
+build
 /MPC
 
 *.o
